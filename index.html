@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>解密碼鎖遊戲</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#000000">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="解密碼鎖遊戲">
+    <link rel="apple-touch-icon" href="icon-192.png">
+</head>
+<body>
+    <div class="container">
+        <h1>解密碼鎖遊戲</h1>
+        <div id="game-instruction">
+            <p>請猜出隱藏的3位數字，數字範圍為0-9且不重複</p>
+            <p>A = 數字正確且位置正確</p>
+            <p>B = 數字正確但位置不正確</p>
+        </div>
+        
+        <div id="guess-display">
+            <div id="current-guess"></div>
+            <button id="submit-btn" disabled>確認</button>
+            <button id="clear-btn">清除</button>
+        </div>
+        
+        <div id="keypad">
+            <div class="keypad-row">
+                <button class="key" data-value="1">1</button>
+                <button class="key" data-value="2">2</button>
+                <button class="key" data-value="3">3</button>
+            </div>
+            <div class="keypad-row">
+                <button class="key" data-value="4">4</button>
+                <button class="key" data-value="5">5</button>
+                <button class="key" data-value="6">6</button>
+            </div>
+            <div class="keypad-row">
+                <button class="key" data-value="7">7</button>
+                <button class="key" data-value="8">8</button>
+                <button class="key" data-value="9">9</button>
+            </div>
+            <div class="keypad-row">
+                <button class="key" data-value="0">0</button>
+            </div>
+        </div>
+        
+        <div id="history-container">
+            <h2>猜測記錄</h2>
+            <div id="guess-history"></div>
+        </div>
+        
+        <div id="result-modal" class="modal">
+            <div class="modal-content">
+                <h2 id="result-message"></h2>
+                <p id="secret-code"></p>
+                <button id="play-again-btn">再玩一次</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        // 註冊 Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(function(registration) {
+                        console.log('ServiceWorker 註冊成功: ', registration.scope);
+                    }, function(err) {
+                        console.log('ServiceWorker 註冊失敗: ', err);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>
